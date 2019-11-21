@@ -40,6 +40,8 @@ export class GameScene extends Phaser.Scene {
     this.player = this.physics.add.sprite(100, 600, 'character-walk').setScale(0.2);
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
+
+    this.player.body.setSize(300, 450).setOffset(75, 0);
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('character-walk', { 
@@ -97,10 +99,12 @@ export class GameScene extends Phaser.Scene {
     {
         this.player.setVelocityX(-160);
         this.player.anims.play('left', true);
+        this.player.flipX = true;
     } else if (this.cursorKeys.right.isDown)
     {
         this.player.setVelocityX(160);
         this.player.anims.play('right', true);
+        this.player.flipX = false;
         
     } else
     {
