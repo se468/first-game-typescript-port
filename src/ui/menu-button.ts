@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
 
-const padding = 10;
+const padding = 15;
 const minimumWidth = 200;
 const minimumHeight = 50;
 
@@ -12,7 +12,9 @@ export class MenuButton extends Phaser.GameObjects.Rectangle {
     scene.add.existing(this);
     this.setOrigin(0, 0);
 
-    this.label = scene.add.text(x + padding, y + padding, text).setFontSize(18).setAlign('center');
+    this.label = scene.add.text(x + padding, y + padding, text, {
+      fontFamily: 'Fredoka One'
+    }).setFontSize(18);
 
     const labelWidth = this.label.width + padding;
     const labelHeight = this.label.height + padding;

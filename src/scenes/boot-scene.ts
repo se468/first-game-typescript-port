@@ -58,10 +58,23 @@ export class BootScene extends Phaser.Scene {
    * is currently active, so they can be accessed anywhere.
    */
   private loadAssets() {
-    // Load sample assets
+    this.load.image('sky', 'assets/sky.png')
+    this.load.image('ground', 'assets/platform.png')
+    this.load.image('star', 'assets/star.png')
+    this.load.image('bomb', 'assets/bomb.png')
+    this.load.spritesheet('dude', 
+        'assets/dude.png',
+        { frameWidth: 32, frameHeight: 48 }
+    )
+    
+    // new 
+    this.load.image('background', 'assets/png/BG/BG.png')
+    this.load.image('platform', 'assets/png/Tiles/14.png')
 
-    // Source: Open Game Art
-    this.load.image('man', 'assets/character.png');
+    this.load.spritesheet('character-walk', 
+        'assets/character/walk.png',
+        { frameWidth: 547, frameHeight: 481 }
+    )
   }
 
 }
