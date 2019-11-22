@@ -27,7 +27,7 @@ export class GameScene extends Phaser.Scene {
 
     // Platforms
     const map = this.make.tilemap({ key: 'map' });
-    const tileset = map.addTilesetImage('kenny_simple_platformer', 'tiles');
+    const tileset = map.addTilesetImage('grass', 'tiles');
     this.platforms = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
     this.platforms.setCollisionByExclusion([-1], true);
     
@@ -67,9 +67,6 @@ export class GameScene extends Phaser.Scene {
         key: 'star',
         repeat: 13,
         setXY: { x: 12, y: 0, stepX: 70 }
-    });
-    this.stars.children.iterate(function (child) {
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
     });
     this.physics.add.collider(this.stars, this.platforms);
     this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
