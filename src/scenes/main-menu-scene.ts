@@ -22,6 +22,12 @@ export class MainMenuScene extends Phaser.Scene {
       fontFamily: 'Fredoka One'
     }).setFontSize(50).setOrigin(0.5, 0.5);
 
+    let bestScore: number = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
+    this.add.text(1000/2, 250, `Best Score: ${bestScore}`, { 
+      fill: '#000000',
+      fontFamily: 'Fredoka One'
+    }).setFontSize(25).setOrigin(0.5, 0.5);
+
     new MenuButton(this, 50, 350, 'Start Game', () => {
       this.scene.start('Game');
     });
