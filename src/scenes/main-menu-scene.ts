@@ -17,27 +17,21 @@ export class MainMenuScene extends Phaser.Scene {
   public create() {
     this.add.image(1000/2, 750/2, 'background');
 
-    this.add.text(1000/2, 180, `SEYONG's ADVANTURE`, { 
-      fill: '#000000',
+    this.add.text(1000/2, 180, `FOX LIKES STARS`, { 
+      fill: '#3386FF',
       fontFamily: 'Fredoka One'
-    }).setFontSize(50).setOrigin(0.5, 0.5);
+    }).setFontSize(85).setOrigin(0.5, 0.5).setStroke("#FFFFFF", 16);
 
     let bestScore: number = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
-    this.add.text(1000/2, 250, `Best Score: ${bestScore}`, { 
-      fill: '#000000',
+    this.add.text(1000/2, 350, `Best Score: ${bestScore}`, { 
+      fill: '#FFB533',
       fontFamily: 'Fredoka One'
-    }).setFontSize(25).setOrigin(0.5, 0.5);
+    }).setFontSize(25).setOrigin(0.5, 0.5).setStroke("#FFFFFF", 3);
 
-    new MenuButton(this, 50, 350, 'Start Game', () => {
+    new MenuButton(this, 1000 / 2 - 80, 450, 'PLAY', () => {
       this.scene.start('Game');
     });
 
-    new MenuButton(this, 400, 350, 'Settings', () => {
-      console.log('settings button clicked');
-    });
-
-    new MenuButton(this, 750, 350, 'Help', () => {
-      console.log('help button clicked');
-    });
+    this.physics.world.setFPS(120);
   }
 }

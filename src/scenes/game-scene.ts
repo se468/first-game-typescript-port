@@ -77,9 +77,9 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
 
     this.scoreText = this.add.text(16, 16, 'Score: 0', { 
-      fill: '#000000',
+      fill: '#3386FF',
       fontFamily: 'Fredoka One'
-    });
+    }).setStroke("#FFFFFF", 3);
     this.cursorKeys = this.input.keyboard.createCursorKeys();
 
     this.createBomb();
@@ -146,6 +146,6 @@ export class GameScene extends Phaser.Scene {
     let bomb = this.bombs.create(x, 16, 'bomb');
     bomb.setBounce(1);
     bomb.setCollideWorldBounds(true);
-    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+    bomb.setVelocity(Phaser.Math.Between(-100, 100), 20);
   }
 }

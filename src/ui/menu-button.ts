@@ -1,8 +1,6 @@
 import * as Phaser from 'phaser';
 
 const padding = 15;
-const minimumWidth = 200;
-const minimumHeight = 50;
 
 export class MenuButton extends Phaser.GameObjects.Rectangle {
   private label: Phaser.GameObjects.Text;
@@ -13,14 +11,15 @@ export class MenuButton extends Phaser.GameObjects.Rectangle {
     this.setOrigin(0, 0);
 
     this.label = scene.add.text(x + padding, y + padding, text, {
-      fontFamily: 'Fredoka One'
-    }).setFontSize(18);
+      fontFamily: 'Fredoka One',
+      fill: '#3386FF',
+    }).setFontSize(50).setStroke("#FFFFFF", 5);
 
     const labelWidth = this.label.width + padding;
     const labelHeight = this.label.height + padding;
 
-    this.width = labelWidth >= minimumWidth ? labelWidth : minimumWidth;
-    this.height = labelHeight >= minimumHeight ? labelHeight : minimumHeight;
+    this.width = labelWidth;
+    this.height = labelHeight;
 
     this.setInteractive({ useHandCursor: true })
       .on('pointerover', this.enterMenuButtonHoverState)
@@ -36,17 +35,14 @@ export class MenuButton extends Phaser.GameObjects.Rectangle {
   }
 
   private enterMenuButtonHoverState() {
-    this.label.setColor('#000000');
-    this.setFillStyle(0x888888);
+    this.label.setColor('#FFFF00');
   }
 
   private enterMenuButtonRestState() {
-    this.label.setColor('#FFFFFF');
-    this.setFillStyle(0x888888);
+    this.label.setColor('#3386FF');
   }
 
   private enterMenuButtonActiveState() {
-    this.label.setColor('#BBBBBB');
-    this.setFillStyle(0x444444);
+    this.label.setColor('#FFFF00');
   }
 }
