@@ -26,7 +26,7 @@ export class MainMenuScene extends Phaser.Scene {
     this.add.text(1000/2, 350, `Best Score: ${bestScore}`, { 
       fill: '#FFB533',
       fontFamily: 'Fredoka One'
-    }).setFontSize(25).setOrigin(0.5, 0.5).setStroke("#FFFFFF", 3);
+    }).setFontSize(40).setOrigin(0.5, 0.5).setStroke("#FFFFFF", 3);
 
     new MenuButton(this, 1000 / 2 - 80, 450, 'PLAY', () => {
       this.scene.start('Game');

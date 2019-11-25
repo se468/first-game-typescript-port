@@ -34,6 +34,13 @@ export class MenuButton extends Phaser.GameObjects.Rectangle {
     this.enterMenuButtonRestState();
   }
 
+  public show() {
+    this.label.visible = true;
+  }
+  public hide() {
+    this.label.visible = false;
+  }
+
   private enterMenuButtonHoverState() {
     this.label.setColor('#FFFF00');
   }

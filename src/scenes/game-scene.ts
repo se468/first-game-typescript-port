@@ -1,3 +1,5 @@
+import { MenuButton } from '../ui/menu-button';
+
 const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
   active: false,
   visible: false,
@@ -18,11 +20,17 @@ export class GameScene extends Phaser.Scene {
   private bombs;
   private scoreText;
 
+  //Gameover
+  private gameoverText;
+  private toMainMenuBtn;
+
   constructor() {
     super(sceneConfig);
   }
 
   public create() {
+    this.gameOver = false;
+
     this.add.image(1000/2, 750/2, 'background');
 
     // Platforms
@@ -83,13 +91,24 @@ export class GameScene extends Phaser.Scene {
     this.cursorKeys = this.input.keyboard.createCursorKeys();
 
     this.createBomb();
+
+    // Gameover
+    this.gameoverText= this.add.text(1000 / 2, 180, `Game Over`, {
+      fill: '#3386FF',
+      fontFamily: 'Fredoka One'
+    }).setFontSize(85).setOrigin(0.5, 0.5).setStroke("#FFFFFF", 16);
+    this.gameoverText.visible = false;
+
+    this.toMainMenuBtn = new MenuButton(this, 1000 / 2 - 180, 450, 'Back to Menu', () => {
+      this.scene.start('MainMenu');
+    });
+    this.toMainMenuBtn.hide();
   }
 
   public update() {
     
     if (this.gameOver) {
-      this.scene.start('MainMenu');
-      this.gameOver = false;
+      return;
     }
 
     if (this.cursorKeys.left.isDown) {
@@ -139,6 +158,9 @@ export class GameScene extends Phaser.Scene {
     let bestScore: number = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
     localStorage.setItem('bestScore', Math.max(this.score, bestScore).toString());
     this.score = 0;
+
+    this.gameoverText.visible = true;
+    this.toMainMenuBtn.show();
   }
 
   private createBomb() {
