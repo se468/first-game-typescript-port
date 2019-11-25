@@ -50,6 +50,8 @@ export class BootScene extends Phaser.Scene {
     });
 
     this.loadAssets();
+
+    this.physics.world.setFPS(120);
   }
 
   /**
@@ -62,7 +64,7 @@ export class BootScene extends Phaser.Scene {
     this.load.image('ground', 'assets/platform.png')
     this.load.image('star', 'assets/star.png')
     this.load.image('bomb', 'assets/bomb.png')
-
+    this.load.image('pause', 'assets/pause.png')
     // new 
     this.load.image('background', 'assets/png/BG/BG.png')
     this.load.spritesheet('character-walk', 

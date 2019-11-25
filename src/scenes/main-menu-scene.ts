@@ -32,6 +32,5 @@ export class MainMenuScene extends Phaser.Scene {
       this.scene.start('Game');
     });
 
-    this.physics.world.setFPS(120);
   }
 }

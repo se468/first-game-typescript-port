@@ -1,3 +1,4 @@
+import { game } from '../main';
 import { MenuButton } from '../ui/menu-button';
 
 const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
@@ -14,6 +15,7 @@ export class GameScene extends Phaser.Scene {
   private cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
   
   private gameOver: boolean = false;
+  private paused: boolean = false;
 
   private platforms;
   private player;
@@ -21,6 +23,9 @@ export class GameScene extends Phaser.Scene {
   private bombs;
   private scoreText;
   private levelText;
+
+  //UI
+  private pauseBtn;
   //Gameover
   private gameoverText;
   private toMainMenuBtn;
@@ -85,6 +90,7 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.bombs, this.platforms);
     this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
 
+    // UI
     this.scoreText = this.add.text(1000 - 16, 16, `${this.score}`, { 
       fill: '#FFB533',
       fontFamily: 'Fredoka One'
@@ -95,9 +101,9 @@ export class GameScene extends Phaser.Scene {
       fontFamily: 'Fredoka One'
     }).setStroke("#FFFFFF", 3).setFontSize(25).setOrigin(0.5, 0);
     
-    this.cursorKeys = this.input.keyboard.createCursorKeys();
-
-    this.createBomb();
+    this.pauseBtn = this.add.image(16, 16, 'pause').setOrigin(0, 0).setScale(0.5);
+    this.pauseBtn.setInteractive({ useHandCursor: true });
+    this.pauseBtn.on('pointerup', this.playOrPause)
 
     // Gameover
     this.gameoverText= this.add.text(1000 / 2, 180, `Game Over`, {
@@ -110,6 +116,11 @@ export class GameScene extends Phaser.Scene {
       this.scene.start('MainMenu');
     });
     this.toMainMenuBtn.hide();
+
+    // Start Game
+    this.cursorKeys = this.input.keyboard.createCursorKeys();
+
+    this.createBomb();
   }
 
   public update() {
@@ -134,6 +145,16 @@ export class GameScene extends Phaser.Scene {
 
     if (this.cursorKeys.space.isDown && this.player.body.onFloor()) {
         this.player.setVelocityY(-560);
+    }
+  }
+
+  private playOrPause() {
+    console.log('toggle pause');
+    this.paused = !this.paused;
+    if (this.paused) {
+      game.scene.pause('Game');
+    } else {
+      game.scene.resume('Game');
     }
   }
 
