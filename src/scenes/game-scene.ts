@@ -168,6 +168,7 @@ export class GameScene extends Phaser.Scene {
     let bestScore: number = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
     localStorage.setItem('bestScore', Math.max(this.score, bestScore).toString());
     this.score = 0;
+    this.level = 1;
 
     this.gameoverText.visible = true;
     this.toMainMenuBtn.show();
