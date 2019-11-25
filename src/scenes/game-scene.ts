@@ -9,6 +9,7 @@ const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
 export class GameScene extends Phaser.Scene {
 
   public score: number = 0;
+  public level: number = 1;
 
   private cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
   
@@ -19,7 +20,7 @@ export class GameScene extends Phaser.Scene {
   private stars;
   private bombs;
   private scoreText;
-
+  private levelText;
   //Gameover
   private gameoverText;
   private toMainMenuBtn;
@@ -30,7 +31,7 @@ export class GameScene extends Phaser.Scene {
 
   public create() {
     this.gameOver = false;
-
+    
     this.add.image(1000/2, 750/2, 'background');
 
     // Platforms
@@ -84,10 +85,16 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.bombs, this.platforms);
     this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
 
-    this.scoreText = this.add.text(16, 16, 'Score: 0', { 
+    this.scoreText = this.add.text(1000 - 16, 16, `${this.score}`, { 
+      fill: '#FFB533',
+      fontFamily: 'Fredoka One'
+    }).setStroke("#FFFFFF", 3).setFontSize(40).setOrigin(1.0, 0);
+
+    this.levelText = this.add.text(1000 / 2, 16, `Level: ${this.level}`, {
       fill: '#3386FF',
       fontFamily: 'Fredoka One'
-    }).setStroke("#FFFFFF", 3);
+    }).setStroke("#FFFFFF", 3).setFontSize(25).setOrigin(0.5, 0);
+    
     this.cursorKeys = this.input.keyboard.createCursorKeys();
 
     this.createBomb();
@@ -142,7 +149,7 @@ export class GameScene extends Phaser.Scene {
     star.disableBody(true, true);
 
     this.score += 10;
-    this.scoreText.setText('Score: ' + this.score);
+    this.scoreText.setText(this.score);
 
     if (this.stars.countActive(true) === 0)
     {
@@ -150,6 +157,9 @@ export class GameScene extends Phaser.Scene {
           child.enableBody(true, child.x, 0, true, true);
       });
       this.createBomb();
+
+      this.level += 1;
+      this.levelText.setText('Level: ' + this.level);
     }
   }
 
