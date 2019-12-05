@@ -13,5 +13,10 @@ jobs:
       uses: mooyoul/tslint-actions@v1.1.1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        config: ./tsconfig.json
+        # Path of TypeScript Project file
+        project: # optional
+        # Path of TSLint configuration
+        config: # optional, default is tslint.json
+        # Glob pattern to match
+        pattern: # optional
 
