@@ -86,7 +86,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     if (this.cursorKeys.space.isDown && this.gameObjects.player.body.onFloor()) {
-        this.gameObjects.player.setVelocityY(-560);
+        this.gameObjects.player.setVelocityY(-650);
         this.sounds.jump.play();
     }
   }
