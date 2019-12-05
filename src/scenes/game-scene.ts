@@ -156,11 +156,11 @@ export class GameScene extends Phaser.Scene {
 
     this.UI.muteBtn = this.add.image(16, 16, 'sound').setOrigin(0, 0).setScale(0.5);
     this.UI.muteBtn.setInteractive({ useHandCursor: true });
-    this.UI.muteBtn.on('pointerup', () => {this.toggleSound();});
+    this.UI.muteBtn.on('pointerup', () => {this.toggleSound(); });
 
     this.UI.pauseBtn = this.add.image(16, 80, 'pause').setOrigin(0, 0).setScale(0.5);
     this.UI.pauseBtn.setInteractive({ useHandCursor: true });
-    this.UI.pauseBtn.on('pointerup', () => {this.playOrPause();});
+    this.UI.pauseBtn.on('pointerup', () => {this.playOrPause(); });
 
     // Gameover
     this.UI.gameOverText = this.add.text(1000 / 2, 180, `Game Over`, {
