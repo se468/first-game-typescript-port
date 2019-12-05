@@ -65,6 +65,7 @@ export class BootScene extends Phaser.Scene {
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.image('pause', 'assets/pause.png');
+    this.load.image('sound', 'assets/sound.png');
     // new
     this.load.image('background', 'assets/png/BG/BG.png');
     this.load.spritesheet('character-walk',

@@ -11,25 +11,29 @@ export class GameScene extends Phaser.Scene {
 
   public score: number = 0;
   public level: number = 1;
-
-  private cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
-
   private gameOver: boolean = false;
   private paused: boolean = false;
 
-  private platforms;
-  private player;
-  private stars;
-  private bombs;
+  private cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
+
+  private gameObjects = {
+    platforms: null,
+    player: null,
+    stars: null,
+    bombs: null
+  };
 
   // UI
-  private scoreText;
-  private levelText;
-  private pauseBtn;
+  private UI = {
+    scoreText: null,
+    levelText: null,
+    pauseBtn: null,
+    muteBtn: null,
 
-  // Gameover
-  private gameoverText;
-  private toMainMenuBtn;
+    // GameOver
+    gameOverText: null,
+    toMainMenuBtn: null
+  }
 
   // Sounds
   private sounds = {
@@ -46,17 +50,59 @@ export class GameScene extends Phaser.Scene {
 
     this.add.image(1000 / 2, 750 / 2, 'background');
 
+    this.initGameObjects();
+    this.initUI();
+
+    // Background Music
+    this.sounds.bg = this.sound.add('background-music', {
+      loop: true,
+    });
+    this.sounds.bg.play();
+    this.sounds.jump = this.sound.add('jump-sound');
+
+    // Start Game
+    this.cursorKeys = this.input.keyboard.createCursorKeys();
+
+    this.createBomb();
+  }
+
+  public update() {
+    if (this.gameOver) {
+      return;
+    }
+
+    if (this.cursorKeys.left.isDown) {
+        this.gameObjects.player.setVelocityX(-300);
+        this.gameObjects.player.anims.play('left', true);
+        this.gameObjects.player.flipX = true;
+    } else if (this.cursorKeys.right.isDown) {
+        this.gameObjects.player.setVelocityX(300);
+        this.gameObjects.player.anims.play('right', true);
+        this.gameObjects.player.flipX = false;
+
+    } else {
+        this.gameObjects.player.setVelocityX(0);
+        this.gameObjects.player.anims.play('turn');
+    }
+
+    if (this.cursorKeys.space.isDown && this.gameObjects.player.body.onFloor()) {
+        this.gameObjects.player.setVelocityY(-560);
+        this.sounds.jump.play();
+    }
+  }
+
+  protected initGameObjects() {
     // Platforms
     const map = this.make.tilemap({ key: 'map' });
     const tileset = map.addTilesetImage('grass', 'tiles');
-    this.platforms = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
-    this.platforms.setCollisionByExclusion([-1], true);
+    this.gameObjects.platforms = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
+    this.gameObjects.platforms.setCollisionByExclusion([-1], true);
 
     // Player
-    this.player = this.physics.add.sprite(100, 600, 'character-walk').setScale(0.18);
-    this.player.setBounce(0);
-    this.player.setCollideWorldBounds(true);
-    this.player.body.setSize(300, 450).setOffset(75, 0);
+    this.gameObjects.player = this.physics.add.sprite(100, 600, 'character-walk').setScale(0.18);
+    this.gameObjects.player.setBounce(0);
+    this.gameObjects.player.setCollideWorldBounds(true);
+    this.gameObjects.player.body.setSize(300, 450).setOffset(75, 0);
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('character-walk', {
@@ -80,87 +126,54 @@ export class GameScene extends Phaser.Scene {
         frameRate: 10,
         repeat: -1,
     });
-    this.physics.add.collider(this.player, this.platforms);
+    this.physics.add.collider(this.gameObjects.player, this.gameObjects.platforms);
 
     // Stars
-    this.stars = this.physics.add.group({
+    this.gameObjects.stars = this.physics.add.group({
         key: 'star',
         repeat: 13,
         setXY: { x: 12, y: 0, stepX: 70 },
     });
-    this.physics.add.collider(this.stars, this.platforms);
-    this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
+    this.physics.add.collider(this.gameObjects.stars, this.gameObjects.platforms);
+    this.physics.add.overlap(this.gameObjects.player, this.gameObjects.stars, this.collectStar, null, this);
 
     // Bombs
-    this.bombs = this.physics.add.group();
-    this.physics.add.collider(this.bombs, this.platforms);
-    this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
+    this.gameObjects.bombs = this.physics.add.group();
+    this.physics.add.collider(this.gameObjects.bombs, this.gameObjects.platforms);
+    this.physics.add.collider(this.gameObjects.player, this.gameObjects.bombs, this.hitBomb, null, this);
+  }
 
-    // UI
-    this.scoreText = this.add.text(1000 - 16, 16, `${this.score}`, {
+  protected initUI () {
+    this.UI.scoreText = this.add.text(1000 - 16, 16, `${this.score}`, {
       fill: '#FFB533',
       fontFamily: 'Fredoka One',
     }).setStroke('#FFFFFF', 3).setFontSize(40).setOrigin(1.0, 0);
 
-    this.levelText = this.add.text(1000 / 2, 16, `Level: ${this.level}`, {
+    this.UI.levelText = this.add.text(1000 / 2, 16, `Level: ${this.level}`, {
       fill: '#3386FF',
       fontFamily: 'Fredoka One',
     }).setStroke('#FFFFFF', 3).setFontSize(25).setOrigin(0.5, 0);
 
-    this.pauseBtn = this.add.image(16, 16, 'pause').setOrigin(0, 0).setScale(0.5);
-    this.pauseBtn.setInteractive({ useHandCursor: true });
-    this.pauseBtn.on('pointerup', this.playOrPause);
+    this.UI.muteBtn = this.add.image(16, 16, 'sound').setOrigin(0, 0).setScale(0.5);
+    this.UI.muteBtn.setInteractive({ useHandCursor: true });
+    this.UI.muteBtn.on('pointerup', () => {this.toggleSound()});
+
+    this.UI.pauseBtn = this.add.image(16, 80, 'pause').setOrigin(0, 0).setScale(0.5);
+    this.UI.pauseBtn.setInteractive({ useHandCursor: true });
+    this.UI.pauseBtn.on('pointerup', () => {this.playOrPause()});
 
     // Gameover
-    this.gameoverText = this.add.text(1000 / 2, 180, `Game Over`, {
+    this.UI.gameOverText = this.add.text(1000 / 2, 180, `Game Over`, {
       fill: '#3386FF',
       fontFamily: 'Fredoka One',
     }).setFontSize(85).setOrigin(0.5, 0.5).setStroke('#FFFFFF', 16);
-    this.gameoverText.visible = false;
+    this.UI.gameOverText.visible = false;
 
-    this.toMainMenuBtn = new MenuButton(this, 1000 / 2 - 180, 450, 'Back to Menu', () => {
+    this.UI.toMainMenuBtn = new MenuButton(this, 1000 / 2 - 180, 450, 'Back to Menu', () => {
       this.sounds.bg.stop();
       this.scene.start('MainMenu');
     });
-    this.toMainMenuBtn.hide();
-
-    // Background Music
-    this.sounds.bg = this.sound.add('background-music', {
-      loop: true,
-    });
-    this.sounds.bg.play();
-    this.sounds.jump = this.sound.add('jump-sound');
-
-    // Start Game
-    this.cursorKeys = this.input.keyboard.createCursorKeys();
-
-    this.createBomb();
-  }
-
-  public update() {
-
-    if (this.gameOver) {
-      return;
-    }
-
-    if (this.cursorKeys.left.isDown) {
-        this.player.setVelocityX(-300);
-        this.player.anims.play('left', true);
-        this.player.flipX = true;
-    } else if (this.cursorKeys.right.isDown) {
-        this.player.setVelocityX(300);
-        this.player.anims.play('right', true);
-        this.player.flipX = false;
-
-    } else {
-        this.player.setVelocityX(0);
-        this.player.anims.play('turn');
-    }
-
-    if (this.cursorKeys.space.isDown && this.player.body.onFloor()) {
-        this.player.setVelocityY(-560);
-        this.sounds.jump.play();
-    }
+    this.UI.toMainMenuBtn.hide();
   }
 
   private playOrPause() {
@@ -169,6 +182,15 @@ export class GameScene extends Phaser.Scene {
       game.scene.pause('Game');
     } else {
       game.scene.resume('Game');
+    }
+  }
+
+  private toggleSound() {
+    if (this.sounds.bg.isPlaying) {
+      this.sounds.bg.stop();
+    }
+    else {
+      this.sounds.bg.play();
     }
   }
 
@@ -183,16 +205,16 @@ export class GameScene extends Phaser.Scene {
     star.disableBody(true, true);
 
     this.score += 10;
-    this.scoreText.setText(this.score);
+    this.UI.scoreText.setText(this.score);
 
-    if (this.stars.countActive(true) === 0) {
-      this.stars.children.iterate((child) => {
+    if (this.gameObjects.stars.countActive(true) === 0) {
+      this.gameObjects.stars.children.iterate((child) => {
           child.enableBody(true, child.x, 0, true, true);
       });
       this.createBomb();
 
       this.level += 1;
-      this.levelText.setText('Level: ' + this.level);
+      this.UI.levelText.setText('Level: ' + this.level);
     }
   }
 
@@ -203,13 +225,13 @@ export class GameScene extends Phaser.Scene {
     this.score = 0;
     this.level = 1;
 
-    this.gameoverText.visible = true;
-    this.toMainMenuBtn.show();
+    this.UI.gameOverText.visible = true;
+    this.UI.toMainMenuBtn.show();
   }
 
   private createBomb() {
-    const x = (this.player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-    const bomb = this.bombs.create(x, 16, 'bomb');
+    const x = (this.gameObjects.player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+    const bomb = this.gameObjects.bombs.create(x, 16, 'bomb');
     bomb.setBounce(1);
     bomb.setCollideWorldBounds(true);
     bomb.setVelocity(Phaser.Math.Between(-100, 100), 20);

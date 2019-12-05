@@ -37,10 +37,23 @@ export class MainMenuScene extends Phaser.Scene {
       this.scene.start('Game');
     });
 
+    const muteBtn = this.add.image(16, 16, 'sound').setOrigin(0, 0).setScale(0.5);
+    muteBtn.setInteractive({ useHandCursor: true });
+    muteBtn.on('pointerup', () => {this.toggleSound()});
+
     // Background Music
     this.bgmusic = this.sound.add('background-music', {
       loop: true,
     });
     this.bgmusic.play();
+  }
+
+  private toggleSound() {
+    if (this.bgmusic.isPlaying) {
+      this.bgmusic.stop();
+    }
+    else {
+      this.bgmusic.play();
+    }
   }
 }
