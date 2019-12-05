@@ -1,4 +1,6 @@
 # Phaser 3 + Typescript Practice
+![](https://github.com/se468/first-game-typescript-port/workflows/CI/badge.svg)
+
 
 Steps:
 ```

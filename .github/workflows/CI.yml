@@ -13,6 +13,5 @@ jobs:
       uses: mooyoul/tslint-actions@v1.1.1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        config: './tsconfig.json'
         pattern: "**/*.ts"
 
