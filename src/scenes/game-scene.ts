@@ -20,7 +20,7 @@ export class GameScene extends Phaser.Scene {
     platforms: null,
     player: null,
     stars: null,
-    bombs: null
+    bombs: null,
   };
 
   // UI
@@ -32,8 +32,8 @@ export class GameScene extends Phaser.Scene {
 
     // GameOver
     gameOverText: null,
-    toMainMenuBtn: null
-  }
+    toMainMenuBtn: null,
+  };
 
   // Sounds
   private sounds = {
@@ -143,7 +143,7 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.gameObjects.player, this.gameObjects.bombs, this.hitBomb, null, this);
   }
 
-  protected initUI () {
+  protected initUI() {
     this.UI.scoreText = this.add.text(1000 - 16, 16, `${this.score}`, {
       fill: '#FFB533',
       fontFamily: 'Fredoka One',
@@ -156,11 +156,11 @@ export class GameScene extends Phaser.Scene {
 
     this.UI.muteBtn = this.add.image(16, 16, 'sound').setOrigin(0, 0).setScale(0.5);
     this.UI.muteBtn.setInteractive({ useHandCursor: true });
-    this.UI.muteBtn.on('pointerup', () => {this.toggleSound()});
+    this.UI.muteBtn.on('pointerup', () => {this.toggleSound();});
 
     this.UI.pauseBtn = this.add.image(16, 80, 'pause').setOrigin(0, 0).setScale(0.5);
     this.UI.pauseBtn.setInteractive({ useHandCursor: true });
-    this.UI.pauseBtn.on('pointerup', () => {this.playOrPause()});
+    this.UI.pauseBtn.on('pointerup', () => {this.playOrPause();});
 
     // Gameover
     this.UI.gameOverText = this.add.text(1000 / 2, 180, `Game Over`, {
@@ -188,8 +188,7 @@ export class GameScene extends Phaser.Scene {
   private toggleSound() {
     if (this.sounds.bg.isPlaying) {
       this.sounds.bg.stop();
-    }
-    else {
+    } else {
       this.sounds.bg.play();
     }
   }
