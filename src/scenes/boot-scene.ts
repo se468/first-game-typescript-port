@@ -60,23 +60,23 @@ export class BootScene extends Phaser.Scene {
    * is currently active, so they can be accessed anywhere.
    */
   private loadAssets() {
-    
-    this.load.image('ground', 'assets/platform.png')
-    this.load.image('star', 'assets/star.png')
-    this.load.image('bomb', 'assets/bomb.png')
-    this.load.image('pause', 'assets/pause.png')
-    // new 
-    this.load.image('background', 'assets/png/BG/BG.png')
-    this.load.spritesheet('character-walk', 
+
+    this.load.image('ground', 'assets/platform.png');
+    this.load.image('star', 'assets/star.png');
+    this.load.image('bomb', 'assets/bomb.png');
+    this.load.image('pause', 'assets/pause.png');
+    // new
+    this.load.image('background', 'assets/png/BG/BG.png');
+    this.load.spritesheet('character-walk',
         'assets/character/walk.png',
-        { frameWidth: 547, frameHeight: 481 }
-    )
+        { frameWidth: 547, frameHeight: 481 },
+    );
 
-    this.load.image('tiles', 'assets/maps/Spritesheet/sheet.png')
-    this.load.tilemapTiledJSON("map", "assets/maps/level1.json")
+    this.load.image('tiles', 'assets/maps/Spritesheet/sheet.png');
+    this.load.tilemapTiledJSON('map', 'assets/maps/level1.json');
 
-    this.load.audio('background-music', 'assets/sound/476547__mrthenoronha__platform-game-theme-loop-3.wav')
-    this.load.audio('jump-sound', 'assets/sound/331381__qubodup__public-domain-jump-sound.wav')
+    this.load.audio('background-music', 'assets/sound/476547__mrthenoronha__platform-game-theme-loop-3.wav');
+    this.load.audio('jump-sound', 'assets/sound/331381__qubodup__public-domain-jump-sound.wav');
 
   }
 

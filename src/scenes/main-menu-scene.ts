@@ -10,7 +10,7 @@ const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
  * The initial scene that starts, shows the splash screens, and loads the necessary assets.
  */
 export class MainMenuScene extends Phaser.Scene {
-  //Sounds
+  // Sounds
   private bgmusic;
 
   constructor() {
@@ -18,29 +18,29 @@ export class MainMenuScene extends Phaser.Scene {
   }
 
   public create() {
-    console.log(this.sys.game)
-    this.add.image(1000/2, 750/2, 'background');
+    // console.log(this.sys.game);
+    this.add.image(1000 / 2, 750 / 2, 'background');
 
-    this.add.text(1000/2, 180, `FOX LIKES STARS`, { 
+    this.add.text(1000 / 2, 180, `FOX LIKES STARS`, {
       fill: '#3386FF',
-      fontFamily: 'Fredoka One'
-    }).setFontSize(85).setOrigin(0.5, 0.5).setStroke("#FFFFFF", 16);
+      fontFamily: 'Fredoka One',
+    }).setFontSize(85).setOrigin(0.5, 0.5).setStroke('#FFFFFF', 16);
 
-    let bestScore: number = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
-    this.add.text(1000/2, 350, `Best Score: ${bestScore}`, { 
+    const bestScore: number = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
+    this.add.text(1000 / 2, 350, `Best Score: ${bestScore}`, {
       fill: '#FFB533',
-      fontFamily: 'Fredoka One'
-    }).setFontSize(40).setOrigin(0.5, 0.5).setStroke("#FFFFFF", 3);
+      fontFamily: 'Fredoka One',
+    }).setFontSize(40).setOrigin(0.5, 0.5).setStroke('#FFFFFF', 3);
 
-    new MenuButton(this, 1000 / 2 - 80, 450, 'PLAY', () => {
-      this.bgmusic.stop()
-      this.scene.start('Game')
+    const startBtn: MenuButton = new MenuButton(this, 1000 / 2 - 80, 450, 'PLAY', () => {
+      this.bgmusic.stop();
+      this.scene.start('Game');
     });
 
     // Background Music
     this.bgmusic = this.sound.add('background-music', {
-      loop: true
-    })
-    this.bgmusic.play()
+      loop: true,
+    });
+    this.bgmusic.play();
   }
 }

@@ -13,7 +13,7 @@ export class MenuButton extends Phaser.GameObjects.Rectangle {
     this.label = scene.add.text(x + padding, y + padding, text, {
       fontFamily: 'Fredoka One',
       fill: '#3386FF',
-    }).setFontSize(50).setStroke("#FFFFFF", 5);
+    }).setFontSize(50).setStroke('#FFFFFF', 5);
 
     const labelWidth = this.label.width + padding;
     const labelHeight = this.label.height + padding;

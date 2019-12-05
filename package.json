@@ -8,7 +8,8 @@
   "private": false,
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server",
+    "lint": "tslint --fix --project ./tsconfig.json"
   },
   "dependencies": {
     "phaser": "^3.20.1"
