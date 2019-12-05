@@ -26,9 +26,16 @@ export class GameScene extends Phaser.Scene {
 
   //UI
   private pauseBtn;
+
   //Gameover
   private gameoverText;
   private toMainMenuBtn;
+
+  //Sounds
+  private sounds = {
+    bg: null,
+    jump: null
+  };
 
   constructor() {
     super(sceneConfig);
@@ -113,14 +120,22 @@ export class GameScene extends Phaser.Scene {
     this.gameoverText.visible = false;
 
     this.toMainMenuBtn = new MenuButton(this, 1000 / 2 - 180, 450, 'Back to Menu', () => {
-      this.scene.start('MainMenu');
+      this.sounds.bg.stop()
+      this.scene.start('MainMenu')
     });
-    this.toMainMenuBtn.hide();
+    this.toMainMenuBtn.hide()
+
+    // Background Music
+    this.sounds.bg = this.sound.add('background-music', {
+      loop: true
+    })
+    this.sounds.bg.play()
+    this.sounds.jump = this.sound.add('jump-sound')
 
     // Start Game
-    this.cursorKeys = this.input.keyboard.createCursorKeys();
+    this.cursorKeys = this.input.keyboard.createCursorKeys()
 
-    this.createBomb();
+    this.createBomb()
   }
 
   public update() {
@@ -144,12 +159,12 @@ export class GameScene extends Phaser.Scene {
     }
 
     if (this.cursorKeys.space.isDown && this.player.body.onFloor()) {
-        this.player.setVelocityY(-560);
+        this.player.setVelocityY(-560)
+        this.sounds.jump.play()
     }
   }
 
   private playOrPause() {
-    console.log('toggle pause');
     this.paused = !this.paused;
     if (this.paused) {
       game.scene.pause('Game');

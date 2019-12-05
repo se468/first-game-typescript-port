@@ -10,11 +10,15 @@ const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
  * The initial scene that starts, shows the splash screens, and loads the necessary assets.
  */
 export class MainMenuScene extends Phaser.Scene {
+  //Sounds
+  private bgmusic;
+
   constructor() {
     super(sceneConfig);
   }
 
   public create() {
+    console.log(this.sys.game)
     this.add.image(1000/2, 750/2, 'background');
 
     this.add.text(1000/2, 180, `FOX LIKES STARS`, { 
@@ -29,8 +33,14 @@ export class MainMenuScene extends Phaser.Scene {
     }).setFontSize(40).setOrigin(0.5, 0.5).setStroke("#FFFFFF", 3);
 
     new MenuButton(this, 1000 / 2 - 80, 450, 'PLAY', () => {
-      this.scene.start('Game');
+      this.bgmusic.stop()
+      this.scene.start('Game')
     });
 
+    // Background Music
+    this.bgmusic = this.sound.add('background-music', {
+      loop: true
+    })
+    this.bgmusic.play()
   }
 }

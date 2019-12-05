@@ -74,6 +74,10 @@ export class BootScene extends Phaser.Scene {
 
     this.load.image('tiles', 'assets/maps/Spritesheet/sheet.png')
     this.load.tilemapTiledJSON("map", "assets/maps/level1.json")
+
+    this.load.audio('background-music', 'assets/sound/476547__mrthenoronha__platform-game-theme-loop-3.wav')
+    this.load.audio('jump-sound', 'assets/sound/331381__qubodup__public-domain-jump-sound.wav')
+
   }
 
 }
