@@ -194,6 +194,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private hitBomb(player, bomb) {
+      this.cameras.main.shake(100);
       this.physics.pause();
       player.setTint(0xff0000);
       player.anims.play('turn');
