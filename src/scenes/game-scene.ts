@@ -193,7 +193,7 @@ export class GameScene extends Phaser.Scene {
       this.UI.muteBtn.setTexture('mute', 0);
     } else {
       this.game.sound.mute = false;
-      this.UI.muteBtn.setTexture('mute', 0);
+      this.UI.muteBtn.setTexture('sound', 0);
     }
   }
 
