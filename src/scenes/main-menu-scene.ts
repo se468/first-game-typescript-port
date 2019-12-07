@@ -12,7 +12,7 @@ const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
 export class MainMenuScene extends Phaser.Scene {
   // Sounds
   private bgmusic;
-
+  private muteBtn;
   constructor() {
     super(sceneConfig);
   }
@@ -37,9 +37,9 @@ export class MainMenuScene extends Phaser.Scene {
       this.scene.start('Game');
     });
 
-    const muteBtn = this.add.image(16, 16, 'sound').setOrigin(0, 0).setScale(0.5);
-    muteBtn.setInteractive({ useHandCursor: true });
-    muteBtn.on('pointerup', () => {this.toggleSound(); });
+    this.muteBtn = this.add.image(16, 16, (this.game.sound.mute ? 'mute' : 'sound')).setOrigin(0, 0).setScale(0.5);
+    this.muteBtn.setInteractive({ useHandCursor: true });
+    this.muteBtn.on('pointerup', () => {this.toggleSound(); });
 
     // Background Music
     this.bgmusic = this.sound.add('background-music', {
@@ -49,10 +49,12 @@ export class MainMenuScene extends Phaser.Scene {
   }
 
   private toggleSound() {
-    if (this.bgmusic.isPlaying) {
-      this.bgmusic.stop();
+    if (!this.game.sound.mute) {
+      this.game.sound.mute = true;
+      this.muteBtn.setTexture('mute', 0);
     } else {
-      this.bgmusic.play();
+      this.game.sound.mute = false;
+      this.muteBtn.setTexture('sound', 0);
     }
   }
 }

@@ -66,6 +66,8 @@ export class BootScene extends Phaser.Scene {
     this.load.image('bomb', 'assets/bomb.png');
     this.load.image('pause', 'assets/pause.png');
     this.load.image('sound', 'assets/sound.png');
+    this.load.image('mute', 'assets/mute.png');
+
     // new
     this.load.image('background', 'assets/png/BG/BG.png');
     this.load.spritesheet('character-walk',
@@ -78,6 +80,7 @@ export class BootScene extends Phaser.Scene {
 
     this.load.audio('background-music', 'assets/sound/476547__mrthenoronha__platform-game-theme-loop-3.wav');
     this.load.audio('jump-sound', 'assets/sound/331381__qubodup__public-domain-jump-sound.wav');
+    this.load.audio('coin-sound', 'assets/sound/173323__soundnimja__coin-4.wav');
 
   }
 

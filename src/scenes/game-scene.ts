@@ -39,6 +39,7 @@ export class GameScene extends Phaser.Scene {
   private sounds = {
     bg: null,
     jump: null,
+    coin: null,
   };
 
   constructor() {
@@ -59,6 +60,7 @@ export class GameScene extends Phaser.Scene {
     });
     this.sounds.bg.play();
     this.sounds.jump = this.sound.add('jump-sound');
+    this.sounds.coin = this.sound.add('coin-sound');
 
     // Start Game
     this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -154,7 +156,7 @@ export class GameScene extends Phaser.Scene {
       fontFamily: 'Fredoka One',
     }).setStroke('#FFFFFF', 3).setFontSize(25).setOrigin(0.5, 0);
 
-    this.UI.muteBtn = this.add.image(16, 16, 'sound').setOrigin(0, 0).setScale(0.5);
+    this.UI.muteBtn = this.add.image(16, 16, (this.game.sound.mute ? 'mute' : 'sound')).setOrigin(0, 0).setScale(0.5);
     this.UI.muteBtn.setInteractive({ useHandCursor: true });
     this.UI.muteBtn.on('pointerup', () => {this.toggleSound(); });
 
@@ -186,10 +188,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   private toggleSound() {
-    if (this.sounds.bg.isPlaying) {
-      this.sounds.bg.stop();
+    if (!this.game.sound.mute) {
+      this.game.sound.mute = true;
+      this.UI.muteBtn.setTexture('mute', 0);
     } else {
-      this.sounds.bg.play();
+      this.game.sound.mute = false;
+      this.UI.muteBtn.setTexture('mute', 0);
     }
   }
 
@@ -206,7 +210,7 @@ export class GameScene extends Phaser.Scene {
 
     this.score += 10;
     this.UI.scoreText.setText(this.score);
-
+    this.sounds.coin.play();
     if (this.gameObjects.stars.countActive(true) === 0) {
       this.gameObjects.stars.children.iterate((child) => {
           child.enableBody(true, child.x, 0, true, true);
