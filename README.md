@@ -2,7 +2,6 @@
 ![](https://github.com/se468/first-game-typescript-port/workflows/CI/badge.svg)
 
 
-Try it at: `https://foxlovesstars.github.io`
 
 Steps:
 ```
