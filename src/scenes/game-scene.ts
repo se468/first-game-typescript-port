@@ -162,7 +162,7 @@ export class GameScene extends Phaser.Scene {
 
     this.UI.pauseBtn = this.add.image(16, 80, 'pause').setOrigin(0, 0).setScale(0.5);
     this.UI.pauseBtn.setInteractive({ useHandCursor: true });
-    this.UI.pauseBtn.on('pointerup', () => {this.playOrPause(); });
+    this.UI.pauseBtn.on('pointerup', () => {this.pauseClicked(); });
 
     // Gameover
     this.UI.gameOverText = this.add.text(1000 / 2, 180, `Game Over`, {
@@ -174,17 +174,14 @@ export class GameScene extends Phaser.Scene {
     this.UI.toMainMenuBtn = new MenuButton(this, 1000 / 2 - 180, 450, 'Back to Menu', () => {
       this.sounds.bg.stop();
       this.scene.start('MainMenu');
+      this.scene.stop();
     });
     this.UI.toMainMenuBtn.hide();
   }
 
-  private playOrPause() {
-    this.paused = !this.paused;
-    if (this.paused) {
-      game.scene.pause('Game');
-    } else {
-      game.scene.resume('Game');
-    }
+  private pauseClicked() {
+    this.game.scene.pause('Game');
+    this.game.scene.start('Pause');
   }
 
   private toggleSound() {
