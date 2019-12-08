@@ -45,7 +45,6 @@ export class BootScene extends Phaser.Scene {
       assetText.destroy();
       progressBar.destroy();
       progressBarContainer.destroy();
-
       this.scene.start('MainMenu');
     });
 
@@ -83,5 +82,4 @@ export class BootScene extends Phaser.Scene {
     this.load.audio('coin-sound', 'assets/sound/173323__soundnimja__coin-4.wav');
 
   }
-
 }
