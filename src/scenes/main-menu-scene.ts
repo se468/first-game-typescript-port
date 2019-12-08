@@ -21,7 +21,7 @@ export class MainMenuScene extends Phaser.Scene {
     // console.log(this.sys.game);
     this.add.image(1000 / 2, 750 / 2, 'background');
 
-    this.add.text(1000 / 2, 180, `FOX LIKES STARS`, {
+    this.add.text(1000 / 2, 180, `FOX LOVES STARS`, {
       fill: '#3386FF',
       fontFamily: 'Fredoka One',
     }).setFontSize(85).setOrigin(0.5, 0.5).setStroke('#FFFFFF', 16);

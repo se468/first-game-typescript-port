@@ -12,7 +12,6 @@ export class GameScene extends Phaser.Scene {
   public score: number = 0;
   public level: number = 1;
   private gameOver: boolean = false;
-  private paused: boolean = false;
 
   private cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
 
