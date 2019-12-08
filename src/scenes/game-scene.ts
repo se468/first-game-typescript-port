@@ -48,7 +48,6 @@ export class GameScene extends Phaser.Scene {
 
   public create() {
     this.gameOver = false;
-
     this.add.image(1000 / 2, 750 / 2, 'background');
 
     this.initGameObjects();
