@@ -1,0 +1,8 @@
+{
+  "appId": "com.seyongcho.foxlovesstars",
+  "appName": "FoxLovesStars",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "dist",
+  "cordova": {}
+}

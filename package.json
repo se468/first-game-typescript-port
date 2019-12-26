@@ -12,6 +12,9 @@
     "lint": "tslint --fix --project ./tsconfig.json"
   },
   "dependencies": {
+    "@capacitor/cli": "^1.4.0",
+    "@capacitor/core": "^1.4.0",
+    "@capacitor/ios": "^1.4.0",
     "phaser": "^3.20.1"
   },
   "devDependencies": {
