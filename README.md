@@ -12,9 +12,15 @@ yarn dev
 
 Lint:
 ```
-tslint --project ./tsconfig.json 
+tslint --project ./tsconfig.json
 
 or autofix:
-tslint --fix --project ./tsconfig.json 
+tslint --fix --project ./tsconfig.json
 yarn lint
+```
+
+Create IOS (Capacitor):
+```
+npx cap add ios
+npx cap sync
 ```

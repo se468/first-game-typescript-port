@@ -25,6 +25,10 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   },
 
   parent: 'game',
+
+  audio: {
+    disableWebAudio: true
+  }
 };
 
 export const game = new Phaser.Game(gameConfig);
