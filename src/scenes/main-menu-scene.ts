@@ -46,6 +46,8 @@ export class MainMenuScene extends Phaser.Scene {
       loop: true,
     });
     this.bgmusic.play();
+
+    let player = this.add.sprite(100, 600, 'character-walk')
   }
 
   private toggleSound() {

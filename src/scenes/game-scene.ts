@@ -32,6 +32,11 @@ export class GameScene extends Phaser.Scene {
     // GameOver
     gameOverText: null,
     toMainMenuBtn: null,
+
+    // Controls
+    leftBtn: null,
+    rightBtn: null,
+    jumpBtn: null
   };
 
   // Sounds
